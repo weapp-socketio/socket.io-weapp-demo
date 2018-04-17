@@ -1,0 +1,144 @@
+.page-wrap {
+  display: flex;
+  flex-direction: column;
+  background: #ebebeb;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+.chat-container {
+  flex: 1;
+  text-align: center;
+  overflow-y: auto;
+}
+.system-message {
+  font-size: 14px;
+  line-height: 14px;
+  color: #fff;
+  background: #cecece;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 8rpx 15rpx;
+  margin: 30rpx 0 10rpx;
+}
+.user-message {
+  margin: 38rpx 20rpx 0;
+  text-align: left;
+  font-size: 0;
+  display: flex;
+}
+
+.avatar {
+  width: 84rpx;
+  height: 84rpx;
+  border: #a5a5a7 1rpx solid;
+  display: inline-block;
+  vertical-align: top;
+}
+.text {
+  display: inline-block;
+  vertical-align: top;
+}
+.user-message.other .text {
+  margin-left: 19rpx;
+}
+
+.user-message.other .text view {
+  display: inline-block;
+}
+
+.text .nickname {
+  color: #737373;
+  font-size: 14px;
+  margin-bottom: 6rpx;
+}
+.text .content {
+  font-size: 30rpx;
+  line-height: 36rpx;
+  padding: 20rpx;
+  position: relative;
+}
+
+.text .nickname {
+  font-size: 36rpx;
+}
+
+.user-message.other .text .content::after,
+.user-message.other .text .content::before {
+  right: 100%;
+  border-right-style: solid;
+}
+
+.input-panel {
+  height: 100rpx;
+  box-sizing: border-box;
+  padding: 13rpx 20rpx 0;
+  background: #f5f5f7;
+  border-top: #d7d7d9 1rpx solid;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.send-input {
+  flex: 1;
+  height: 72rpx;
+  background: #fff;
+  border: #ddd 1rpx solid;
+  border-radius: 3px;
+  /* margin-right: 20rpx; */
+  box-sizing: border-box;
+  /* padding: 0 10rpx; */
+}
+
+.me .nickname {
+  display: none;
+}
+
+@media (max-width: 360px) {
+  .avatar {
+    width: 100rpx;
+    height: 100rpx;
+  }
+  .text .content {
+    font-size: 36rpx;
+    line-height: 44rpx;
+    padding: 20rpx;
+    position: relative;
+  }
+  .text .nickname {
+    font-size: 42rpx;
+  }
+  .user-message.other .text .content::before {
+    top: 22rpx;
+    border-right-color: #ccc;
+  }
+  .user-message.other .text .content::after {
+    border: 14rpx solid transparent;
+    top: 23rpx;
+    border-right-color: #fff;
+  }
+
+  .input-panel {
+    height: 120rpx;
+    box-sizing: border-box;
+    padding: 13rpx 20rpx 0;
+    background: #f5f5f7;
+    border-top: #d7d7d9 1rpx solid;
+    box-sizing: border-box;
+    display: flex;
+  }
+
+  .send-input {
+    flex: 1;
+    height: 92rpx;
+    background: #fff;
+    border: #ddd 1rpx solid;
+    border-radius: 3px;
+    /* margin-right: 20rpx; */
+    box-sizing: border-box;
+    /* padding: 0 10rpx; */
+  }
+}

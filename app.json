@@ -1,0 +1,9 @@
+{
+  "pages": ["pages/index/index", "pages/chat/index"],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "weapp.socket.io chat demo",
+    "navigationBarTextStyle": "black"
+  }
+}

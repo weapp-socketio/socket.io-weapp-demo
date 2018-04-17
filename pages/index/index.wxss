@@ -1,0 +1,9 @@
+.chat-btn {
+  background-color: white;
+  width: 80%;
+  margin: auto;
+  height: 80rpx;
+  border-radius: 10rpx;
+  text-align: center;
+  line-height: 80rpx;
+}

@@ -1,0 +1,9 @@
+<view class="page">
+    <view class="page__hd">
+        <view class="page__title">聊天室 Demo</view>
+        <view class="page__desc">本 Demo 主要为开发者演示 weapp.socket.io 的基本用法</view>
+    </view>
+    <view class="page__bd page__bd_spacing">
+        <navigator url="/pages/chat/index" hover-class="weui-cell_active" class="chat-btn">进入聊天室</navigator>
+    </view>
+</view>
