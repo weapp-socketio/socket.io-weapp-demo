@@ -11,7 +11,7 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.98",
+	"libVersion": "2.0.2",
 	"appid": "wxfbd99d2dee1708f9",
 	"projectname": "weapp.socket.io.demo",
 	"isGameTourist": false,
@@ -24,13 +24,24 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": -1,
+					"name": "chat",
+					"pathName": "pages/chat/index",
+					"query": ""
+				}
+			]
 		}
 	}
 }

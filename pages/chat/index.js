@@ -94,6 +94,11 @@ Page({
       this.socket.close()
       this.socket = null
     }
+
+    if (this.osocket) {
+      this.osocket.close()
+      this.osocket = null
+    }
   },
 
   /**
@@ -101,7 +106,6 @@ Page({
    */
   enter() {
     this.pushMessage(createSystemMessage('正在登录...'))
-
     // 如果登录过，会记录当前用户在 this.me 上
     if (!this.me) {
       wx.getUserInfo({
@@ -172,15 +176,33 @@ Page({
     this.amendMessage(createSystemMessage('正在加入群聊...'))
 
     const socket = (this.socket = io(
-      'https://vast-plateau-30681.herokuapp.com/',
+      'https://socket-io-chat.now.sh/',
     ))
+
+    // const socket = (this.socket = io(
+    //   'https://vast-plateau-30681.herokuapp.com/',
+    //   { transports: ['websocket']}))
+
+    // const osocket = (this.osocket = io(
+    //   'https://vast-plateau-30681.herokuapp.com/news',
+    //   { forceNew: true }))
+
+    // console.log('osocket: ', osocket)
+
+    // osocket.on('news', function(d) {
+    //   console.log('news nsp: ', d)
+    // })
+
+    // io(
+    //   'https://vast-plateau-30681.herokuapp.com/',
+    // )
 
     /**
      * Aboud connection
      */
     socket.on('connect', () => {
       this.popMessage()
-      this.pushMessage(createSystemMessage('You joined'))
+      this.pushMessage(createSystemMessage('连接成功'))
     })
 
     socket.on('connect_error', d => {
@@ -212,7 +234,9 @@ Page({
     /**
      * About chat
      */
-    socket.on('login', d => {})
+    socket.on('login', d => {      
+      this.pushMessage(createSystemMessage(`您已加入聊天室，当前共有 ${d.numUsers} 人`))
+    })
 
     socket.on('new message', d => {
       const { username, message } = d
@@ -220,13 +244,11 @@ Page({
     })
 
     socket.on('user joined', d => {
-      this.pushMessage(createSystemMessage(`${d.username} joined`))
-      this.pushMessage(createSystemMessage(`当前共有 ${d.numUsers} 人`))
+      this.pushMessage(createSystemMessage(`${d.username} 来了，当前共有 ${d.numUsers} 人`))
     })
 
     socket.on('user left', d => {
-      this.pushMessage(createSystemMessage(`${d.username} left`))
-      this.pushMessage(createSystemMessage(`当前共有 ${d.numUsers} 人`))
+      this.pushMessage(createSystemMessage(`${d.username} 离开了，当前共有 ${d.numUsers} 人`))
     })
 
     socket.on('typing', d => {})
