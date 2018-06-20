@@ -227,6 +227,10 @@ Page({
       this.pushMessage(createSystemMessage('reconnect_failed'))
     })
 
+    socket.on('reconnect_attempt', () => {
+      this.pushMessage(createSystemMessage('正在尝试重连'))
+    })
+
     socket.on('error', err => {
       this.pushMessage(createSystemMessage(`error: ${err}`))
     })
