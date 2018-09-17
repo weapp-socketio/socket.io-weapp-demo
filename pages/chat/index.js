@@ -58,7 +58,7 @@ function getUsernameColor(username) {
 
 Page({
   data: {
-    inputContent: 'Hello everybody',
+    inputContent: 'Hi guys, Im testing weapp socket.io',
     messages: [],
     lastMessageId: 'none',
   },
