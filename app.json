@@ -1,9 +1,5 @@
 {
-  "pages": [
-    "pages/index/index",
-    "pages/chat/index",
-    "pages/file/index"
-  ],
+  "pages": ["pages/index/index", "pages/chat/index"],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
