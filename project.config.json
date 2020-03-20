@@ -11,10 +11,12 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.0.2",
-	"appid": "wxfbd99d2dee1708f9",
-	"projectname": "weapp.socket.io.demo",
+	"libVersion": "2.10.2",
+	"appid": "wx3a918974b28755e0",
+	"projectname": "socket.io-weapp-demo",
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,

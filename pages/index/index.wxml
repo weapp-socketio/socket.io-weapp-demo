@@ -5,9 +5,12 @@
     </view>
 
     <view class="page__bd page__bd_spacing">
-      <button open-type="getUserInfo" bindgetuserinfo="getuserinfo" class="chat-btn">授权用户信息</button>
+        <button open-type="getUserInfo" bindgetuserinfo="getuserinfo" class="chat-btn">授权用户信息</button>
     </view>
     <view class="page__bd page__bd_spacing">
         <navigator url="/pages/chat/index" hover-class="weui-cell_active" class="chat-btn">进入聊天室</navigator>
+    </view>
+    <view class="page__bd page__bd_spacing">
+        <navigator url="/pages/file/index" hover-class="weui-cell_active" class="chat-btn">Test Buffer</navigator>
     </view>
 </view>

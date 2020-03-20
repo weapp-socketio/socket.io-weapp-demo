@@ -9,23 +9,21 @@
   right: 0;
   overflow: hidden;
 }
+
 .chat-container {
   flex: 1;
   text-align: center;
   overflow-y: auto;
 }
+
 .system-message {
-  font-size: 14px;
-  line-height: 14px;
-  color: #fff;
-  background: #cecece;
-  border-radius: 4px;
+  font-size: 24rpx;
+  color: #cecece;
   display: inline-block;
-  padding: 8rpx 15rpx;
-  margin: 30rpx 0 10rpx;
 }
+
 .user-message {
-  margin: 38rpx 20rpx 0;
+  margin: 0 20rpx;
   text-align: left;
   font-size: 0;
   display: flex;
@@ -38,10 +36,12 @@
   display: inline-block;
   vertical-align: top;
 }
+
 .text {
   display: inline-block;
   vertical-align: top;
 }
+
 .user-message.other .text {
   margin-left: 19rpx;
 }
@@ -52,18 +52,16 @@
 
 .text .nickname {
   color: #737373;
-  font-size: 14px;
-  margin-bottom: 6rpx;
 }
+
 .text .content {
-  font-size: 30rpx;
-  line-height: 36rpx;
-  padding: 20rpx;
+  font-size: 34rpx;
+  padding-left: 10rpx;
   position: relative;
 }
 
 .text .nickname {
-  font-size: 36rpx;
+  font-size: 34rpx;
 }
 
 .user-message.other .text .content::after,
@@ -102,19 +100,23 @@
     width: 100rpx;
     height: 100rpx;
   }
+
   .text .content {
     font-size: 36rpx;
     line-height: 44rpx;
     padding: 20rpx;
     position: relative;
   }
+
   .text .nickname {
     font-size: 42rpx;
   }
+
   .user-message.other .text .content::before {
     top: 22rpx;
     border-right-color: #ccc;
   }
+
   .user-message.other .text .content::after {
     border: 14rpx solid transparent;
     top: 23rpx;
