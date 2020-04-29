@@ -1,19 +1,19 @@
-const io = require('../../utils/weapp.socket.io.js');
+const io = require('../../utils/weapp.socket.io.js')
 
 //index.js
 //获取应用实例
-const app = getApp();
+const app = getApp()
 
-console.log('wx: ', wx);
+console.log('wx: ', wx)
 
 /**
  * 生成一条聊天室的消息的唯一 ID
  */
 function msgUuid() {
   if (!msgUuid.next) {
-    msgUuid.next = 0;
+    msgUuid.next = 0
   }
-  return 'msg-' + ++msgUuid.next;
+  return 'msg-' + ++msgUuid.next
 }
 
 /**
@@ -24,14 +24,14 @@ function createSystemMessage(content) {
     id: msgUuid(),
     type: 'system',
     content
-  };
+  }
 }
 
 /**
  * 生成聊天室的聊天消息
  */
 function createUserMessage(content, user, isMe) {
-  const color = getUsernameColor(user);
+  const color = getUsernameColor(user)
   return {
     id: msgUuid(),
     type: 'speak',
@@ -39,7 +39,7 @@ function createUserMessage(content, user, isMe) {
     user,
     isMe,
     color
-  };
+  }
 }
 
 var COLORS = [
@@ -54,26 +54,26 @@ var COLORS = [
   '#3b88eb',
   '#3824aa',
   '#a700ff',
-  '#d300e7',
-];
+  '#d300e7'
+]
 
 // Gets the color of a username through our hash function
 function getUsernameColor(username) {
   // Compute hash code
-  var hash = 7;
+  var hash = 7
   for (var i = 0; i < username.length; i++) {
-    hash = username.charCodeAt(i) + (hash << 5) - hash;
+    hash = username.charCodeAt(i) + (hash << 5) - hash
   }
   // Calculate color
-  var index = Math.abs(hash % COLORS.length);
-  return COLORS[index];
+  var index = Math.abs(hash % COLORS.length)
+  return COLORS[index]
 }
 
 Page({
   data: {
     inputContent: 'Hi guys, Im testing weapp socket.io',
     messages: [],
-    lastMessageId: 'none',
+    lastMessageId: 'none'
   },
 
   onLoad: function () {},
@@ -84,10 +84,10 @@ Page({
   onReady() {
     wx.setNavigationBarTitle({
       title: '在线聊天室'
-    });
+    })
     if (!this.pageReady) {
-      this.pageReady = true;
-      this.enter();
+      this.pageReady = true
+      this.enter()
     }
   },
 
@@ -96,23 +96,23 @@ Page({
    */
   onShow() {
     if (this.pageReady && !this.socket) {
-      this.enter();
+      this.enter()
     }
   },
 
   onUnload() {
-    this.quit();
+    this.quit()
   },
 
   quit() {
     if (this.socket) {
-      this.socket.close();
-      this.socket = null;
+      this.socket.close()
+      this.socket = null
     }
 
     if (this.osocket) {
-      this.osocket.close();
-      this.osocket = null;
+      this.osocket.close()
+      this.osocket = null
     }
   },
 
@@ -120,17 +120,17 @@ Page({
    * 启动聊天室
    */
   enter() {
-    this.pushMessage(createSystemMessage('正在登录...'));
+    this.pushMessage(createSystemMessage('正在登录...'))
     // 如果登录过，会记录当前用户在 this.me 上
     if (!this.me) {
       wx.getUserInfo({
-        success: res => {
-          this.me = res.userInfo;
-          this.createConnect();
-        },
-      });
+        success: (res) => {
+          this.me = res.userInfo
+          this.createConnect()
+        }
+      })
     } else {
-      this.createConnect();
+      this.createConnect()
     }
   },
 
@@ -138,146 +138,145 @@ Page({
    * 通用更新当前消息集合的方法
    */
   updateMessages(updater) {
-    var messages = this.data.messages;
-    updater(messages);
+    var messages = this.data.messages
+    updater(messages)
 
     this.setData({
       messages
-    });
+    })
 
     // 需要先更新 messagess 数据后再设置滚动位置，否则不能生效
-    var lastMessageId = messages.length ?
-      messages[messages.length - 1].id :
-      'none';
+    var lastMessageId = messages.length
+      ? messages[messages.length - 1].id
+      : 'none'
     this.setData({
       lastMessageId
-    });
+    })
   },
 
   /**
    * 追加一条消息
    */
   pushMessage(message) {
-    this.updateMessages(messages => messages.push(message));
+    this.updateMessages((messages) => messages.push(message))
   },
 
   /**
    * 替换上一条消息
    */
   amendMessage(message) {
-    this.updateMessages(messages => messages.splice(-1, 1, message));
+    this.updateMessages((messages) => messages.splice(-1, 1, message))
   },
 
   /**
    * 删除上一条消息
    */
   popMessage() {
-    this.updateMessages(messages => messages.pop());
+    this.updateMessages((messages) => messages.pop())
   },
 
   changeInputContent: function (e) {
     this.setData({
-      inputContent: e.detail.value,
-    });
+      inputContent: e.detail.value
+    })
   },
 
   sendMessage: function (e) {
-    const msg = e.detail.value;
+    const msg = e.detail.value
     if (!msg) {
-      return;
+      return
     }
-    this.socket.emit('new message', msg);
-    this.pushMessage(createUserMessage(msg, this.me.nickName));
+    this.socket.emit('new message', msg)
+    this.pushMessage(createUserMessage(msg, this.me.nickName))
     this.setData({
       inputContent: null
-    });
+    })
   },
 
   createConnect: function (e) {
-    this.amendMessage(createSystemMessage('正在加入群聊...'));
+    this.amendMessage(createSystemMessage('正在加入群聊...'))
 
-    const socket = (this.socket = io('https://socket-io-chat.now.sh/'));
-    console.log('socket: ', socket);
+    const socket = (this.socket = io(
+      'https://socketio-chat-h9jt.herokuapp.com/'
+    ))
+    console.log('socket: ', socket)
 
     /**
      * Aboud connection
      */
     socket.on('connect', () => {
-      this.popMessage();
-      this.pushMessage(createSystemMessage('连接成功'));
-    });
+      this.popMessage()
+      this.pushMessage(createSystemMessage('连接成功'))
+    })
 
-    socket.on('connect_error', d => {
-      this.pushMessage(createSystemMessage(`connect_error: ${d}`));
-    });
+    socket.on('connect_error', (d) => {
+      this.pushMessage(createSystemMessage(`connect_error: ${d}`))
+    })
 
-    socket.on('connect_timeout', d => {
-      this.pushMessage(createSystemMessage(`connect_timeout: ${d}`));
-    });
+    socket.on('connect_timeout', (d) => {
+      this.pushMessage(createSystemMessage(`connect_timeout: ${d}`))
+    })
 
-    socket.on('disconnect', reason => {
-      this.pushMessage(createSystemMessage(`disconnect: ${reason}`));
-    });
+    socket.on('disconnect', (reason) => {
+      this.pushMessage(createSystemMessage(`disconnect: ${reason}`))
+    })
 
-    socket.on('reconnect', attemptNumber => {
+    socket.on('reconnect', (attemptNumber) => {
       this.pushMessage(
-        createSystemMessage(`reconnect success: ${attemptNumber}`),
-      );
-    });
+        createSystemMessage(`reconnect success: ${attemptNumber}`)
+      )
+    })
 
     socket.on('reconnect_failed', () => {
-      this.pushMessage(createSystemMessage('reconnect_failed'));
-    });
+      this.pushMessage(createSystemMessage('reconnect_failed'))
+    })
 
     socket.on('reconnect_attempt', () => {
-      this.pushMessage(createSystemMessage('正在尝试重连'));
-    });
+      this.pushMessage(createSystemMessage('正在尝试重连'))
+    })
 
-    socket.on('error', err => {
-      this.pushMessage(createSystemMessage(`error: ${err}`));
-    });
+    socket.on('error', (err) => {
+      this.pushMessage(createSystemMessage(`error: ${err}`))
+    })
 
     /**
      * About chat
      */
-    socket.on('login', d => {
+    socket.on('login', (d) => {
       this.pushMessage(
-        createSystemMessage(`您已加入聊天室，当前共有 ${d.numUsers} 人`),
-      );
-    });
+        createSystemMessage(`您已加入聊天室，当前共有 ${d.numUsers} 人`)
+      )
+    })
 
-    socket.on('new message', d => {
-      const {
-        username,
-        message
-      } = d;
-      this.pushMessage(createUserMessage(message, username));
-    });
+    socket.on('new message', (d) => {
+      const { username, message } = d
+      this.pushMessage(createUserMessage(message, username))
+    })
 
-    socket.on('user joined', d => {
+    socket.on('user joined', (d) => {
       this.pushMessage(
-        createSystemMessage(`${d.username} 来了，当前共有 ${d.numUsers} 人`),
-      );
-    });
+        createSystemMessage(`${d.username} 来了，当前共有 ${d.numUsers} 人`)
+      )
+    })
 
-    socket.on('user left', d => {
+    socket.on('user left', (d) => {
       this.pushMessage(
-        createSystemMessage(`${d.username} 离开了，当前共有 ${d.numUsers} 人`),
-      );
-    });
+        createSystemMessage(`${d.username} 离开了，当前共有 ${d.numUsers} 人`)
+      )
+    })
 
-    socket.on('typing', d => {
+    socket.on('typing', (d) => {
       wx.setNavigationBarTitle({
         title: `${d.username} is typing...`
       })
-    });
+    })
 
-    socket.on('stop typing', d => {
+    socket.on('stop typing', (d) => {
       wx.setNavigationBarTitle({
         title: '在线聊天室'
       })
-    });
+    })
 
-    socket.emit('add user', this.me.nickName);
-  },
-});
+    socket.emit('add user', this.me.nickName)
+  }
+})
